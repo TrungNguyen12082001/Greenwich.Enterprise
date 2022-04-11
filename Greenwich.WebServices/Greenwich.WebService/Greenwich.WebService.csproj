@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Greenwich.DAL\Greenwich.DataPersistence\Greenwich.DataPersistence.csproj" />
+    <ProjectReference Include="..\Greenwich.CommonServices\Greenwich.CommonServices.csproj" />
+    <ProjectReference Include="..\Greenwich.Models\Greenwich.Models.csproj" />
+  </ItemGroup>
+
+</Project>
