@@ -7,5 +7,7 @@ namespace Greenwich.WebService.IServices
         Task<bool> DoLike(DoLikeRequest request);
         Task<bool> DoUnlike(DoUnlikeRequest request);
         Task<int> GetLikeCount(int ideaId);
+
+        Task<int> GetUnLikeCount(int ideaId);
     }
 }

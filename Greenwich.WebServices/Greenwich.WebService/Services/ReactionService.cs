@@ -18,7 +18,8 @@ namespace Greenwich.WebService.Services
             var reactionDTO = new Reaction { 
                 UserId = request.UserId,
                 IdeaId = request.IdeaId,
-                CreatedDate = DateTime.UtcNow
+                CreatedDate = DateTime.UtcNow,
+                IsLike = true
             };
             await _unitOfWork.ReactionRepository.InsertAsync(reactionDTO);
             return await _unitOfWork.SaveChangeAsync() > 0;
@@ -26,22 +27,28 @@ namespace Greenwich.WebService.Services
 
         public async Task<bool> DoUnlike(DoUnlikeRequest request)
         {
-            var reactionDTO = await _unitOfWork.ReactionRepository.GetOneAsync(x => 
-            x.IdeaId == request.IdeaId && 
-            x.UserId == request.UserId);
-            if (reactionDTO != null)
+            var reactionDTO = new Reaction
             {
-                _unitOfWork.ReactionRepository.Delete(reactionDTO);
-                return await _unitOfWork.SaveChangeAsync() > 0;
-            }
-
-            return false;
+                UserId = request.UserId,
+                IdeaId = request.IdeaId,
+                CreatedDate = DateTime.UtcNow,
+                IsUnlike = true
+            };
+            await _unitOfWork.ReactionRepository.InsertAsync(reactionDTO);
+            return await _unitOfWork.SaveChangeAsync() > 0;
         }
 
         public async Task<int> GetLikeCount(int ideaId)
         {
             var reactions = await _unitOfWork.ReactionRepository.GetAsync(x =>
-            x.IdeaId == ideaId);
+            x.IdeaId == ideaId && x.IsLike == true);
+            return reactions.Count();
+        }
+
+        public async Task<int> GetUnLikeCount(int ideaId)
+        {
+            var reactions = await _unitOfWork.ReactionRepository.GetAsync(x =>
+            x.IdeaId == ideaId && x.IsUnlike == true);
             return reactions.Count();
         }
     }

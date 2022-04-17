@@ -38,5 +38,12 @@ namespace Greenwich.Enterprise.Api.Controllers
             var response = await _reactionService.GetLikeCount(ideaId);
             return Ok(response);
         }
+
+        [HttpGet("GetUnLikeCount/{ideaId}")]
+        public async Task<IActionResult> GetUnLikeCount(int ideaId)
+        {
+            var response = await _reactionService.GetUnLikeCount(ideaId);
+            return Ok(response);
+        }
     }
 }

@@ -26,8 +26,15 @@ namespace Greenwich.DataPersistence.Repositories
                             CategoryId = i.CategoryId,
                             ClosureDate = s.ClosureDate,
                             FinalClosureDate = s.FinalClosureDate,
-                            LikeCount = (from r in _dbContext.Set<Reaction>() where r.IdeaId == i.Id select r.Id).Count(),
-                            ViewCount = (from v in _dbContext.Set<ViewMonitoring>() where v.IdeaId == i.Id select v.ViewCounts).Sum()
+                            LikeCount = (from r in _dbContext.Set<Reaction>() 
+                                         where r.IdeaId == i.Id && r.IsLike 
+                                         select r.Id).Count(),
+                            UnLikeCount = (from r in _dbContext.Set<Reaction>()
+                                         where r.IdeaId == i.Id && r.IsUnlike
+                                         select r.Id).Count(),
+                            ViewCount = (from v in _dbContext.Set<ViewMonitoring>() 
+                                         where v.IdeaId == i.Id 
+                                         select v.ViewCounts).Sum()
                         };
             return await query.ToListAsync();
         }

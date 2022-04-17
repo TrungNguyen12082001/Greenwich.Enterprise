@@ -15,5 +15,9 @@ namespace Greenwich.EntityFramework.Entities
         public int UserId { get; set; }
 
         public DateTime CreatedDate { get; set; }
+
+        public bool IsLike { get; set; }
+
+        public bool IsUnlike { get; set; }
     }
 }
