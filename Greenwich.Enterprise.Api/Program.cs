@@ -2,6 +2,7 @@ using Greenwich.CommonServices;
 using Greenwich.DataPersistence;
 using Greenwich.EntityFramework;
 using Greenwich.Models;
+using Greenwich.Models.Settings;
 using Greenwich.WebService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +21,13 @@ var jwtSection = configuration.GetSection("jwt");
 jwtSection.Bind(jwtOptions);
 builder.Services.Configure<JwtOptions>(jwtSection);
 builder.Services.AddSingleton<IJwtOptions, JwtOptions>();
+
+#endregion
+
+#region SendGrid Settings
+
+builder.Services.Configure<SendGridSetting>(configuration.GetSection("SendGrid"));
+builder.Services.AddSingleton<ISendGridSetting, SendGridSetting>();
 
 #endregion
 

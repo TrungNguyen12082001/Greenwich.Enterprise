@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SendGrid" Version="9.27.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Greenwich.DAL\Greenwich.DataPersistence\Greenwich.DataPersistence.csproj" />
     <ProjectReference Include="..\Greenwich.CommonServices\Greenwich.CommonServices.csproj" />
     <ProjectReference Include="..\Greenwich.Models\Greenwich.Models.csproj" />
