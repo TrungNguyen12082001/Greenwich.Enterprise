@@ -4,6 +4,7 @@ namespace Greenwich.DataPersistence.Common
 {
     public interface IRepository<TEntity> where TEntity : class
     {
+        // Task để tận dùng memory đang trống để chạy các tác vụ, tăng performace
         Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
                                  Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                                  string includeProperties = "");

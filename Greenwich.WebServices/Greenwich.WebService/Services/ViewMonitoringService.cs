@@ -45,8 +45,8 @@ namespace Greenwich.WebService.Services
 
         public async Task<int> GetViewCountByIdeadId(int ideaId)
         {
-            var query = await _unitOfWork.ViewMonitoringRepository.GetAsync(x => x.IdeaId.Equals(ideaId));
-            return query.Count();
+            var model = await _unitOfWork.ViewMonitoringRepository.GetOneAsync(x => x.IdeaId.Equals(ideaId));
+            return model.ViewCounts;
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Greenwich.DataPersistence.Common
 {
+    // Gom repository lai, neu không dùng thì phải khai báo riêng lẻ
     public interface IGEWUnitOfWork : IDisposable
     {
         Task<int> SaveChangeAsync();

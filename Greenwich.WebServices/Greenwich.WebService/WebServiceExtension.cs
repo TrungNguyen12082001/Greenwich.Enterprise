@@ -17,6 +17,8 @@ namespace Greenwich.WebService
             services.AddScoped<IIdeaService, IdeaService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IReplyService, ReplyService>();
+            services.AddScoped<IReactionService, ReactionService>();
+            services.AddScoped<IViewMonitoringService, ViewMonitoringService>();
         }
     }
 }

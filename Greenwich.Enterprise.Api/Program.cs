@@ -49,6 +49,7 @@ builder.Services.AddAuthentication().AddJwtBearer(cfg =>
 });
 
 // Config authentication for Swagger
+// Middleware
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Greenwich.Enterprise.Api", Version = "v1" });

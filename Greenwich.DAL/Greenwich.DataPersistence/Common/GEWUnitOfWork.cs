@@ -4,11 +4,12 @@ using Greenwich.EntityFramework;
 
 namespace Greenwich.DataPersistence.Common
 {
+    // Gom repository lai, neu không dùng thì phải khai báo riêng lẻ
     public class GEWUnitOfWork : IGEWUnitOfWork
     {
         #region Constructor
 
-        private readonly GEWDbcontext _dbContext;
+        private readonly GEWDbcontext _dbContext; //readonly: only read
 
         public GEWUnitOfWork(GEWDbcontext dbcontext)
         {

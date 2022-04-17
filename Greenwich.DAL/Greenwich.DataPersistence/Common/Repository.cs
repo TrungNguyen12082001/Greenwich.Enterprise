@@ -6,13 +6,13 @@ using System.Linq.Expressions;
 
 namespace Greenwich.DataPersistence.Common
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class //TEntity: khai báo một biến theo generic 
     {
         #region Constructor
 
-        protected DbContext _dbContext;
-        internal DbSet<TEntity> _dbSet;
-        private Policy _policy;
+        protected DbContext _dbContext; // kế thừa cái class này mới thấy
+        internal DbSet<TEntity> _dbSet; // cùng namespace mới thấy
+        private Policy _policy; //chỉ trong file mới thấy
         private readonly ILogger _logger;
 
         public Repository(DbContext dbContext)
@@ -20,8 +20,8 @@ namespace Greenwich.DataPersistence.Common
             _dbContext = dbContext;
             _dbSet = _dbContext.Set<TEntity>();
 
-            _policy = Policy.Handle<SqlException>(e => e.Number == 1205) // Handling deadlock victim
-              .WaitAndRetry(2, retryAttempt => TimeSpan.FromMilliseconds(200),
+            _policy = Policy.Handle<SqlException>(e => e.Number == 1205) // Handling deadlock victim //Policy when call fail will retry
+              .WaitAndRetry(2, retryAttempt => TimeSpan.FromMilliseconds(200), 
               (exception, timeSpan, context) => { _logger.LogError(exception, "SQL Error {0}"); });
         }
 
@@ -35,20 +35,21 @@ namespace Greenwich.DataPersistence.Common
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if (filter != null)
+            if (filter != null) // use lamda expression to write
             {
                 query = query.Where(filter);
             }
 
-            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            var properties = includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries); // string array
+            foreach (var property in properties) //property: string
             {
-                query = query.Include(includeProperty);
+                query = query.Include(property);
             }
 
             return await (orderBy != null ? orderBy(query).ToListAsync() : query.ToListAsync());
         }
 
-        public virtual async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> filter)
+        public virtual async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> filter) //virtual: function can overwrite
         {
             return await _dbSet.FirstOrDefaultAsync(filter);
         }
